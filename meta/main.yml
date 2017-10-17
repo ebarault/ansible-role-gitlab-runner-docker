@@ -1,0 +1,25 @@
+galaxy_info:
+  author: othillo
+  description: Ansible role for installing and configuring and registering GitLab Runner
+  company: Mainly Code
+
+  license: MIT
+
+  min_ansible_version: 2.0
+
+  #
+  # platforms is a list of platforms, and each platform has a name and a list of versions.
+  #
+  platforms:
+   - name: ubuntu
+     versions:
+     - xenial
+
+  galaxy_tags:
+    - "gitlab"
+    - "ci"
+    - "docker"
+    - "gitlab ci"
+    - "runner"
+
+dependencies: []
