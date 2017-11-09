@@ -7,3 +7,6 @@ gitlab_runner_default_image: docker:17
 
 # the URL of the CI server (GitLab)
 gitlab_runner_gitlab_url: https://gitlab.com/
+
+# the name of the runner as to be shown in GitLab
+gitlab_runner_docker_name: "{{ ansible_nodename }}"
