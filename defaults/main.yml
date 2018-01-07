@@ -4,3 +4,6 @@ gitlab_runner_tag: alpine-v10.0.2
 
 # the default docker image to use when not specified in .gitlab-ci.yml
 gitlab_runner_default_image: docker:17
+
+# the URL of the CI server (GitLab)
+gitlab_runner_gitlab_url: https://gitlab.com/
