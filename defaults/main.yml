@@ -1,12 +1,28 @@
 ---
-# the tag of the GitLab runner docker image to be run, see https://hub.docker.com/r/gitlab/gitlab-runner/tags/
-gitlab_runner_tag: alpine-v10.0.2
 
-# the default docker image to use when not specified in .gitlab-ci.yml
-gitlab_runner_default_image: docker:17
+# path on docker host where to mount the image's /etc/gitlab-runner volume
+data_volume: /data/gitlab-runner
+
+# the name of the runner as displayed in gitlab server
+runner_name:
 
 # the URL of the CI server (GitLab)
-gitlab_runner_gitlab_url: https://gitlab.com/
+gitlab_url: https://gitlab.com/
 
-# the name of the runner as to be shown in GitLab
-gitlab_runner_docker_name: "{{ ansible_nodename }}"
+# registration token provided by the gitlab server
+registration_token:
+
+# the tag of the GitLab runner docker image to be run, see https://hub.docker.com/r/gitlab/gitlab-runner/tags/
+image_tag: alpine-v10.3.1
+
+# comma seperated list of tags used by gitlab-ci jobs to select an appropriate runnner
+runner_tags: docker
+
+# by default the runner shall not bet triggered to run untagged jobs
+run_untagged: false
+
+# the default docker image to use when not specified in .gitlab-ci.yml
+default_image: docker:18
+
+# whether the runner will verify the gitlab server certificates
+tlsverify: true

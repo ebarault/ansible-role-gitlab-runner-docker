@@ -1,20 +1,22 @@
 ---
+- name: pip install docker-py
+  pip:
+    name: docker-py
+    state: latest
+
 - name: run GitLab CI runner container
   docker_container:
     name: gitlab-ci-runner
-    image: gitlab/gitlab-runner:{{ gitlab_runner_tag }}
+    image: gitlab/gitlab-runner:{{ image_tag }}
     state: started
     detach: true
     restart_policy: always
     volumes:
+      - "{{data_volume}}:/etc/gitlab-runner"
       - /var/run/docker.sock:/var/run/docker.sock
-  tags:
-    - gitlab-runner
 
-- name: unregister all runners
+- name: unregister any existing runner
   shell: docker exec -t gitlab-ci-runner gitlab-runner unregister --all-runners
-  tags:
-    - gitlab-runner
 
 - name: register the runner with GitLab
   shell: >
@@ -22,15 +24,15 @@
     gitlab-ci-runner
     gitlab-runner register
     --non-interactive
-    --url={{ gitlab_runner_gitlab_url }}
-    --registration-token={{ gitlab_runner_registration_token }}
+    --url={{ gitlab_url }}
+    --registration-token={{ registration_token }}
     --executor=docker
-    --docker-image={{ gitlab_runner_default_image }}
-    --name={{ {{ ansible_nodename }} }}
+    --docker-image={{ default_image }}
+    --name={{ runner_name }}
+    --tag-list={{ runner_tags }}
+    --run-untagged={{ run_untagged }}
     --docker-privileged
-    --docker-tlsverify=false
+    --docker-tlsverify={{ tlsverify }}
     --docker-disable-cache=false
     --docker-volumes=/var/cache:/cache:rw
     --docker-volumes=/var/run/docker.sock:/var/run/docker.sock
-  tags:
-    - gitlab-runner

@@ -1,7 +1,7 @@
 galaxy_info:
-  author: othillo
-  description: Ansible role for installing and configuring and registering GitLab Runner
-  company: Mainly Code
+  author: ebarault | othillo
+  description: Ansible role for installing, configuring and registering a dockerized GitLab Runner as a docker executor
+  company: Helyo (ebarault) | Mainly Code (othillo)
 
   license: MIT
 
