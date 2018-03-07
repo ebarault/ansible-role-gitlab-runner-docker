@@ -29,10 +29,11 @@
     --executor=docker
     --docker-image={{ default_image }}
     --name={{ runner_name }}
+    --limit={{ limit }}
+    --request-concurrency={{ request_concurrency }}
     --tag-list={{ runner_tags }}
     --run-untagged={{ run_untagged }}
     --docker-privileged
-    --docker-tlsverify={{ tlsverify }}
     --docker-disable-cache=false
     --docker-volumes=/var/cache:/cache:rw
     --docker-volumes=/var/run/docker.sock:/var/run/docker.sock

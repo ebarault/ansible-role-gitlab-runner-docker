@@ -30,9 +30,10 @@ the runner settings page in your Gitlab server.
     gitlab_runner_gitlab_url: https://gitlab.com/
     gitlab_runner_registration_token: WuT4fioAfrK3PG_hVefy
     gitlab_runner_default_image: docker:18
+    gitlab_runner_limit: 5
+    gitlab_runner_request_concurrency: 2
     gitlab_runner_tags: docker
     gitlab_runner_run_untagged: false
-    gitlab_runner_tlsverify: true
 
   tasks:
     - name: Call gitlab-runner role with vars
@@ -45,6 +46,8 @@ the runner settings page in your Gitlab server.
         gitlab_url: "{{gitlab_runner_gitlab_url}}"
         registration_token: "{{gitlab_runner_registration_token}}"
         default_image: "{{gitlab_runner_default_image}}"
+        limit: "{{gitlab_runner_limit}}"
+        request_concurrency: "{{gitlab_runner_request_concurrency}}"
         runner_tags:  "{{gitlab_runner_tags}}"
         run_untagged: "{{gitlab_runner_run_untagged}}"
         tlsverify: "{{gitlab_runner_tlsverify}}"
@@ -56,5 +59,5 @@ the runner settings page in your Gitlab server.
 # Install gitlab-runner role from github
 - name: gitlab-runner
   src: https://github.com/ebarault/ansible-role-gitlab-runner-docker
-  version: "1.0"
+  version: "1.1.0"
 ```
