@@ -1,3 +1,5 @@
+See also: https://docs.gitlab.com/runner/configuration/advanced-configuration.html
+
 NAME:
    gitlab-runner register - register a new runner
 

@@ -37,3 +37,9 @@
     --docker-disable-cache=false
     --docker-volumes=/var/cache:/cache:rw
     --docker-volumes=/var/run/docker.sock:/var/run/docker.sock
+
+- name: set concurrency parameter in gitlab-runner's config.toml
+  lineinfile:
+    path: "{{data_volume}}/config.toml"
+    regexp: "^concurrent ="
+    line: "concurrent = {{ concurrent }}"

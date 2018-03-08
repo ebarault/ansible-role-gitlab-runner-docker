@@ -30,8 +30,9 @@ the runner settings page in your Gitlab server.
     gitlab_runner_gitlab_url: https://gitlab.com/
     gitlab_runner_registration_token: WuT4fioAfrK3PG_hVefy
     gitlab_runner_default_image: docker:18
-    gitlab_runner_limit: 5
-    gitlab_runner_request_concurrency: 2
+    gitlab_runner_concurrent: 10 # global to all runners in a same host
+    gitlab_runner_limit: 0 # per token, 0 means unlimited
+    gitlab_runner_request_concurrency: 10 # per runner
     gitlab_runner_tags: docker
     gitlab_runner_run_untagged: false
 
@@ -46,6 +47,7 @@ the runner settings page in your Gitlab server.
         gitlab_url: "{{gitlab_runner_gitlab_url}}"
         registration_token: "{{gitlab_runner_registration_token}}"
         default_image: "{{gitlab_runner_default_image}}"
+        concurrent: "{{ gitlab_runner_concurrent }}"
         limit: "{{gitlab_runner_limit}}"
         request_concurrency: "{{gitlab_runner_request_concurrency}}"
         runner_tags:  "{{gitlab_runner_tags}}"
@@ -59,5 +61,5 @@ the runner settings page in your Gitlab server.
 # Install gitlab-runner role from github
 - name: gitlab-runner
   src: https://github.com/ebarault/ansible-role-gitlab-runner-docker
-  version: "1.1.0"
+  version: "1.2.0"
 ```

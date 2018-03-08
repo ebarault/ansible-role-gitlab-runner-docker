@@ -15,11 +15,14 @@ registration_token:
 # the tag of the GitLab runner docker image to be run, see https://hub.docker.com/r/gitlab/gitlab-runner/tags/
 image_tag: alpine-v10.3.1
 
-# maximum number of builds processed by this runner
+# limits how many jobs globally can be run concurrently. The most upper limit of jobs using all defined runners. 0 does not mean unlimited
+concurrent: 10
+
+# limit how many jobs can be handled concurrently by this token. 0 simply means don't limit
 limit: 0
 
-# maximum concurrency for job requests
-request_concurrency: 0
+# limit number of concurrent requests for new jobs from GitLab
+request_concurrency: 10
 
 # comma seperated list of tags used by gitlab-ci jobs to select an appropriate runnner
 runner_tags: docker
