@@ -43,3 +43,6 @@
     path: "{{data_volume}}/config.toml"
     regexp: "^concurrent ="
     line: "concurrent = {{ concurrent }}"
+    owner: root
+    group: root
+    mode: 0644

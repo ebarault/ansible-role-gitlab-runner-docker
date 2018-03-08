@@ -61,5 +61,5 @@ the runner settings page in your Gitlab server.
 # Install gitlab-runner role from github
 - name: gitlab-runner
   src: https://github.com/ebarault/ansible-role-gitlab-runner-docker
-  version: "1.2.0"
+  version: "1.2.1"
 ```
