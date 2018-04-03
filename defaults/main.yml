@@ -27,8 +27,11 @@ request_concurrency: 10
 # comma seperated list of tags used by gitlab-ci jobs to select an appropriate runnner
 runner_tags: docker
 
-# by default the runner shall not bet triggered to run untagged jobs
+# by default the runner shall not be triggered to run untagged jobs
 run_untagged: false
+
+# by default the runner shall not be locked to a particular project
+locked_to_project: false
 
 # the default docker image to use when not specified in .gitlab-ci.yml
 default_image: docker:18

@@ -32,6 +32,7 @@
     --limit={{ limit }}
     --request-concurrency={{ request_concurrency }}
     --tag-list={{ runner_tags }}
+    --locked={{ locked_to_project}}
     --run-untagged={{ run_untagged }}
     --docker-privileged
     --docker-disable-cache=false

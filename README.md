@@ -34,6 +34,7 @@ the runner settings page in your Gitlab server.
     gitlab_runner_limit: 0 # per token, 0 means unlimited
     gitlab_runner_request_concurrency: 10 # per runner
     gitlab_runner_tags: docker
+    gitlab_runner_locked_to_project: false
     gitlab_runner_run_untagged: false
 
   tasks:
@@ -51,8 +52,8 @@ the runner settings page in your Gitlab server.
         limit: "{{gitlab_runner_limit}}"
         request_concurrency: "{{gitlab_runner_request_concurrency}}"
         runner_tags:  "{{gitlab_runner_tags}}"
+        locked_to_project: "{{gitlab_runner_locked_to_project}}"
         run_untagged: "{{gitlab_runner_run_untagged}}"
-        tlsverify: "{{gitlab_runner_tlsverify}}"
 ```
 
 - **requirements.yml**
