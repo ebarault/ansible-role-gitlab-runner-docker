@@ -36,6 +36,7 @@ the runner settings page in your Gitlab server.
     gitlab_runner_tags: docker
     gitlab_runner_locked_to_project: false
     gitlab_runner_run_untagged: false
+    gitlab_runner_unregister_all: false
 
   tasks:
     - name: Call gitlab-runner role with vars
@@ -54,6 +55,7 @@ the runner settings page in your Gitlab server.
         runner_tags:  "{{gitlab_runner_tags}}"
         locked_to_project: "{{gitlab_runner_locked_to_project}}"
         run_untagged: "{{gitlab_runner_run_untagged}}"
+        unregister_all: "{{gitlab_runner_unregister_all}}"
 ```
 
 - **requirements.yml**
@@ -62,5 +64,5 @@ the runner settings page in your Gitlab server.
 # Install gitlab-runner role from github
 - name: gitlab-runner
   src: https://github.com/ebarault/ansible-role-gitlab-runner-docker
-  version: "1.2.1"
+  version: "1.4.0"
 ```

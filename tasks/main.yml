@@ -17,6 +17,7 @@
 
 - name: unregister any existing runner
   shell: docker exec -t gitlab-ci-runner gitlab-runner unregister --all-runners
+  when: unregister_all
 
 - name: register the runner with GitLab
   shell: >
@@ -47,3 +48,9 @@
     owner: root
     group: root
     mode: 0644
+
+- name: list registered runners
+  shell: docker exec -t gitlab-ci-runner gitlab-runner list
+  register: output
+
+- debug: msg={{ output.stdout_lines }}
