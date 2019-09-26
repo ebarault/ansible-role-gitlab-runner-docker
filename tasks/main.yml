@@ -1,4 +1,10 @@
 ---
+
+- name: Check required var registration_token is set
+  fail:
+    msg: "registration_token var is not set"
+  when: registration_token | length == 0
+
 - name: pip install docker-py
   pip:
     name: docker-py
