@@ -10,7 +10,7 @@ runner_name:
 gitlab_url: https://gitlab.com/
 
 # registration token provided by the gitlab server
-registration_token:
+registration_token: ""
 
 # the tag of the GitLab runner docker image to be run, see https://hub.docker.com/r/gitlab/gitlab-runner/tags/
 image_tag: alpine-v10.3.1
