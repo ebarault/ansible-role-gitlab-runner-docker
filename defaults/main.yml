@@ -13,7 +13,7 @@ gitlab_url: https://gitlab.com/
 registration_token: ""
 
 # the tag of the GitLab runner docker image to be run, see https://hub.docker.com/r/gitlab/gitlab-runner/tags/
-image_tag: alpine-v10.3.1
+image_tag: alpine-v13.4.0
 
 # limits how many jobs globally can be run concurrently. The most upper limit of jobs using all defined runners. 0 does not mean unlimited
 concurrent: 10
