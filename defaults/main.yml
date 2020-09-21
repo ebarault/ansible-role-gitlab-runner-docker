@@ -37,4 +37,4 @@ locked_to_project: false
 default_image: docker:18
 
 # whether existing runners should be first unregistered from any gitlab instance/project
-unregister_all: false
+unregister_all: true
