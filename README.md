@@ -36,7 +36,7 @@ the runner settings page in your Gitlab server.
     gitlab_runner_tags: docker
     gitlab_runner_locked_to_project: false
     gitlab_runner_run_untagged: false
-    gitlab_runner_unregister_all: false
+    gitlab_runner_unregister_all: true
 
   tasks:
     - name: Call gitlab-runner role with vars
