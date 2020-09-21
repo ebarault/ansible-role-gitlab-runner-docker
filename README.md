@@ -7,6 +7,8 @@ Ansible role for installing, configuring and registering a dockerized Gitlab run
 This role uses the Ansible [docker modules](http://docs.ansible.com/ansible/latest/guide_docker.html) and installs
 [`docker-py`](http://docs.ansible.com/ansible/latest/guide_docker.html#requirements).
 
+It expects docker to be installed on the target host.
+
 ## Gitlab Configuration
 
 In order to register the runner with GitLab you need to obtain a registration token from
