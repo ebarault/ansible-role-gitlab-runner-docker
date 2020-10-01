@@ -20,6 +20,10 @@
     volumes:
       - "{{data_volume}}:/etc/gitlab-runner"
       - /var/run/docker.sock:/var/run/docker.sock
+    log_driver: json-file
+    log_options:
+      max-size: "10m"
+      max-file: "3"
 
 - name: unregister any existing runner
   shell: docker exec -t gitlab-ci-runner gitlab-runner unregister --all-runners
