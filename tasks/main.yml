@@ -5,9 +5,9 @@
     msg: "registration_token var is not set"
   when: registration_token | length == 0
 
-- name: pip install docker-py
+- name: pip install docker
   pip:
-    name: docker-py
+    name: docker
     state: latest
 
 - name: run GitLab CI runner container
