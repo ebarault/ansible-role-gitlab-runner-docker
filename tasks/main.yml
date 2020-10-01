@@ -10,13 +10,26 @@
     name: docker
     state: latest
 
+- name: init vars
+  set_fact:
+    command_base: "run --user=gitlab-runner --working-directory=/home/gitlab-runner"
+    metrics_listen_port: "{{ metrics_listen_address | regex_replace('.*:') }}"
+    
+- name: init vars
+  set_fact:  
+    command: "{{ (metrics_listen_address | length > 0) | ternary(command_base + ' --listen-address ' + metrics_listen_address, command_base) }}"
+    published_ports: "{{ (metrics_listen_address | length > 0)  | ternary([metrics_listen_port + ':' + metrics_listen_port], []) }}"
+
 - name: run GitLab CI runner container
   docker_container:
     name: gitlab-ci-runner
     image: gitlab/gitlab-runner:{{ image_tag }}
     state: started
-    detach: true
+    recreate: yes
+    detach: yes
     restart_policy: always
+    command: "{{ command }}"
+    published_ports: "{{ published_ports }}"
     volumes:
       - "{{data_volume}}:/etc/gitlab-runner"
       - /var/run/docker.sock:/var/run/docker.sock

@@ -38,6 +38,7 @@ the runner settings page in your Gitlab server.
     gitlab_runner_tags: docker
     gitlab_runner_locked_to_project: false
     gitlab_runner_run_untagged: false
+    gitlab_runner_metrics_listen_address: ":9252"
     gitlab_runner_unregister_all: true
 
   tasks:
@@ -57,6 +58,7 @@ the runner settings page in your Gitlab server.
         runner_tags:  "{{gitlab_runner_tags}}"
         locked_to_project: "{{gitlab_runner_locked_to_project}}"
         run_untagged: "{{gitlab_runner_run_untagged}}"
+        metrics_listen_address: "{{gitlab_runner_metrics_listen_address}}"
         unregister_all: "{{gitlab_runner_unregister_all}}"
 ```
 
@@ -66,5 +68,7 @@ the runner settings page in your Gitlab server.
 # Install gitlab-runner role from github
 - name: gitlab-runner
   src: https://github.com/ebarault/ansible-role-gitlab-runner-docker
-  version: "1.4.0"
+  version: "1.6.0"
 ```
+
+Please refer to [default/main.yml](https://github.com/ebarault/ansible-role-gitlab-runner-docker/blob/master/defaults/main.yml) for parameters documentation.
