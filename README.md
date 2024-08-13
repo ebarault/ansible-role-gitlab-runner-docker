@@ -5,14 +5,13 @@ Ansible role for installing, configuring and registering a dockerized Gitlab run
 ## Requirements
 
 This role uses the Ansible [docker modules](http://docs.ansible.com/ansible/latest/guide_docker.html) and installs
-[`docker-py`](http://docs.ansible.com/ansible/latest/guide_docker.html#requirements).
+[`docker`](http://docs.ansible.com/ansible/latest/guide_docker.html#requirements).
 
 It expects docker to be installed on the target host.
 
-## Gitlab Configuration
+## Registering Gitlab Runners 
 
-In order to register the runner with GitLab you need to obtain a registration token from
-the runner settings page in your Gitlab server.
+see: https://docs.gitlab.com/runner/register/
 
 ## Usage
 
@@ -27,19 +26,15 @@ the runner settings page in your Gitlab server.
 
   vars:
     gitlab_runner_data_volume: /data/gitlab-runner
-    gitlab_runner_image_tag: alpine-v10.3.1
+    gitlab_runner_image: public.ecr.aws/gitlab/gitlab-runner:alpine3.19-v17.1.1
     gitlab_runner_name: docker-shared
-    gitlab_runner_gitlab_url: https://gitlab.com/
-    gitlab_runner_registration_token: WuT4fioAfrK3PG_hVefy
-    gitlab_runner_default_image: docker:18
-    gitlab_runner_concurrent: 10 # global to all runners in a same host
-    gitlab_runner_limit: 0 # per token, 0 means unlimited
-    gitlab_runner_request_concurrency: 10 # per runner
-    gitlab_runner_tags: docker
-    gitlab_runner_locked_to_project: false
-    gitlab_runner_run_untagged: false
+    gitlab_runner_gitlab_url: https://gitlab.greenflex.com
+    gitlab_runner_auth_token: xxxxxxxxxx
+    gitlab_runner_default_image: public.ecr.aws/docker/library/alpine:3.20.2
+    gitlab_runner_concurrent: 10
+    gitlab_runner_limit: 0
+    gitlab_runner_request_concurrency: 10
     gitlab_runner_metrics_listen_address: ":9252"
-    gitlab_runner_unregister_all: true
 
   tasks:
     - name: Call gitlab-runner role with vars
@@ -47,19 +42,15 @@ the runner settings page in your Gitlab server.
          name: gitlab-runner
       vars:
         data_volume: "{{gitlab_runner_data_volume}}"
-        image_tag: "{{gitlab_runner_image_tag}}"
-        runner_name: "{{gitlab_runner_name}}"
+        image: "{{gitlab_runner_image}}"
+        runner_name: "{{ansible_hostname}}"
         gitlab_url: "{{gitlab_runner_gitlab_url}}"
-        registration_token: "{{gitlab_runner_registration_token}}"
+        runner_auth_token: "{{gitlab_runner_auth_token}}"
         default_image: "{{gitlab_runner_default_image}}"
-        concurrent: "{{ gitlab_runner_concurrent }}"
+        concurrent: "{{gitlab_runner_concurrent}}"
         limit: "{{gitlab_runner_limit}}"
         request_concurrency: "{{gitlab_runner_request_concurrency}}"
-        runner_tags:  "{{gitlab_runner_tags}}"
-        locked_to_project: "{{gitlab_runner_locked_to_project}}"
-        run_untagged: "{{gitlab_runner_run_untagged}}"
         metrics_listen_address: "{{gitlab_runner_metrics_listen_address}}"
-        unregister_all: "{{gitlab_runner_unregister_all}}"
 ```
 
 - **requirements.yml**
@@ -68,7 +59,7 @@ the runner settings page in your Gitlab server.
 # Install gitlab-runner role from github
 - name: gitlab-runner
   src: https://github.com/ebarault/ansible-role-gitlab-runner-docker
-  version: "1.7.0"
+  version: "alpine3.19-v17.1.1"
 ```
 
 Please refer to [default/main.yml](https://github.com/ebarault/ansible-role-gitlab-runner-docker/blob/master/defaults/main.yml) for parameters documentation.
