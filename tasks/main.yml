@@ -1,14 +1,16 @@
 ---
 
-- name: Check required var registration_token is set
+- name: Check required var runner_auth_token is set
   fail:
-    msg: "registration_token var is not set"
-  when: registration_token | length == 0
+    msg: "{{ item.key }} is not defined"
+  when: not item.value
+  with_items:
+  - { key: "runner_auth_token",              value: "{{ runner_auth_token | mandatory }}" }
 
 - name: pip install docker
   pip:
     name: docker
-    state: latest
+    state: present
 
 - name: init vars
   set_fact:
@@ -23,9 +25,10 @@
 - name: run GitLab CI runner container
   docker_container:
     name: gitlab-ci-runner
-    image: gitlab/gitlab-runner:{{ image_tag }}
+    image: "{{ image }}"
     state: started
     recreate: yes
+    restart: yes
     detach: yes
     restart_policy: always
     command: "{{ command }}"
@@ -40,7 +43,10 @@
 
 - name: unregister any existing runner
   shell: docker exec -t gitlab-ci-runner gitlab-runner unregister --all-runners
-  when: unregister_all
+  register: output
+
+- name: display output
+  debug: msg={{ output.stdout_lines }}
 
 - name: register the runner with GitLab
   shell: >
@@ -49,15 +55,12 @@
     gitlab-runner register
     --non-interactive
     --url={{ gitlab_url }}
-    --registration-token={{ registration_token }}
+    --token={{ runner_auth_token }}
     --executor=docker
     --docker-image={{ default_image }}
     --name={{ runner_name }}
     --limit={{ limit }}
     --request-concurrency={{ request_concurrency }}
-    --tag-list={{ runner_tags }}
-    --locked={{ locked_to_project}}
-    --run-untagged={{ run_untagged }}
     --docker-privileged
     --docker-disable-cache=false
     --docker-volumes=/var/run/docker.sock:/var/run/docker.sock
@@ -71,8 +74,15 @@
     group: root
     mode: 0644
 
+- name: restart GitLab CI runner container
+  docker_container:
+    name: gitlab-ci-runner
+    state: started
+    restart: yes
+
 - name: list registered runners
   shell: docker exec -t gitlab-ci-runner gitlab-runner list
   register: output
 
-- debug: msg={{ output.stdout_lines }}
+- name: display output
+  debug: msg={{ output.stdout_lines }}

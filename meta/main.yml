@@ -8,9 +8,9 @@ galaxy_info:
   min_ansible_version: 2.0
 
   platforms:
-   - name: Ubuntu
+   - name: Amazon Linux 2023
      versions:
-     - xenial
+     - amazonlinux2023
 
   galaxy_tags:
     - gitlab

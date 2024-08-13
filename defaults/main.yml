@@ -12,8 +12,8 @@ gitlab_url: https://gitlab.com/
 # registration token provided by the gitlab server
 registration_token: ""
 
-# the tag of the GitLab runner docker image to be run, see https://hub.docker.com/r/gitlab/gitlab-runner/tags/
-image_tag: alpine-v13.4.1
+# the tag of the GitLab runner docker image to be run
+image: public.ecr.aws/gitlab/gitlab-runner:alpine3.19-v17.1.1
 
 # limits how many jobs globally can be run concurrently. The most upper limit of jobs using all defined runners. 0 does not mean unlimited
 concurrent: 10
@@ -24,20 +24,8 @@ limit: 0
 # limit number of concurrent requests for new jobs from GitLab
 request_concurrency: 10
 
-# comma seperated list of tags used by gitlab-ci jobs to select an appropriate runnner
-runner_tags: docker
-
-# by default the runner shall not be triggered to run untagged jobs
-run_untagged: false
-
-# by default the runner shall not be locked to a particular project
-locked_to_project: false
-
 # the default docker image to use when not specified in .gitlab-ci.yml
-default_image: docker:18
-
-# whether existing runners should be first unregistered from any gitlab instance/project
-unregister_all: true
+default_image: public.ecr.aws/docker/library/alpine:3.20.2
 
 # expose Prometheus metrics on the listen address and the /metrics path. Setting an empty string or leaving default value will disable the /metrics endpoint. See https://docs.gitlab.com/runner/monitoring/
 metrics_listen_address: ""
