@@ -13,6 +13,25 @@ It expects docker to be installed on the target host.
 
 see: https://docs.gitlab.com/runner/register/
 
+## Warning: destructive behavior on every run
+
+Applying this role is destructive and, on the GitLab server side, irreversible. Every playbook run does the following:
+
+1. **Recreates the runner container**: the `docker_container` task is declared with `recreate: yes` and `restart: yes`, so the container is torn down and recreated on each run. Any job currently handled by the container is killed, and the container is restarted a second time after `config.toml` has been updated.
+
+2. **Unregisters every runner known to the container, unconditionally**: `gitlab-runner unregister --all-runners` runs on every run, before any registration. It issues a delete request on the GitLab API for all runners listed in the mounted `config.toml` — including any additional runner you may have registered manually in the same volume. Runner deletion on the GitLab server is irreversible: the runner record, its runner ID, its tags and its assignments are permanently lost.
+
+3. **Re-registers the runner from scratch**: the register command sets only the parameters passed to the role (GitLab URL, token, executor, default image, name, limits). It does not use `--tag-list` nor `--leave-runner`, so runner-level configuration such as tags is neither preserved nor restored by the role.
+
+If the register step fails after the unregister step has run, the host is left with no working runner until a later successful run.
+
+Recommended precautions:
+
+- Run the playbook when **no jobs are running** on this runner: in-progress jobs are killed by the container recreation.
+- **Back up `config.toml`** (the `data_volume` directory mounted on `/etc/gitlab-runner`, default `/data/gitlab-runner/config.toml`) before running: it is the only remaining record of the runners removed by the unregister step.
+- Plan for **token rotation**: since the runner record is deleted on the GitLab server by the unregister step, be ready to create a new runner and generate a new authentication token if re-registration with the existing token fails.
+- Avoid registering **additional runners in the same volume**: `--all-runners` removes all of them, not only the one managed by this role.
+
 ## Usage
 
 - **gitlab-runner.yml**
