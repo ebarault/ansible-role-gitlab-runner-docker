@@ -9,8 +9,10 @@ runner_name:
 # the URL of the CI server (GitLab)
 gitlab_url: https://gitlab.com/
 
-# registration token provided by the gitlab server
-registration_token: ""
+# runner authentication token (glrt-...) provided by the gitlab server. Required.
+# Registration tokens are deprecated by GitLab and scheduled for removal in GitLab 20.0,
+# see https://docs.gitlab.com/runner/register/#register-with-a-runner-authentication-token
+runner_auth_token: ""
 
 # the tag of the GitLab runner docker image to be run
 image: public.ecr.aws/gitlab/gitlab-runner:alpine3.19-v17.1.1
